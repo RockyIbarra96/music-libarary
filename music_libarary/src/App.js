@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Gallery from './Components/Gallery';
 import SearchBar from './Components/SearchBar'
+import AlbumView from './Components/AlbumView'
+import ArtistView from './Components/ArtistView'
 
 
 
@@ -14,7 +17,7 @@ const App = () => {
   useEffect(() => {
       if(search) {
           const fetchData = async () => {
-              document.title = `${search} music`
+              document.title = `${search} Music`
               const response = await fetch(API_URL + search)
               const resData = await response.json()
               if (resData.results.length > 0) {
@@ -33,12 +36,23 @@ const App = () => {
   }
 
   return (
-      <div>
-          <SearchBar handleSearch={handleSearch} />
-          {message}
-          <Gallery data={data} />
-      </div>
-  )
+    <div>
+    {message}
+        <Router>
+            <Routes>
+                <Route path="/" element={
+                    <Fragment>
+                        <SearchBar handleSearch = {handleSearch}/>
+                        <Gallery data={data} />
+                    </Fragment>
+                } />
+                <Route path="/album/:id" element={<AlbumView />} />
+                <Route path="/artist/:id" element={<ArtistView />} />
+            </Routes>
+        </Router>
+    </div>
+)
+
 }
 
 export default App

@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect, useState, Suspense } from 'react'
 import Gallery from './Components/Gallery';
 import SearchBar from './Components/SearchBar'
